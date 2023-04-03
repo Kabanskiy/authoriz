@@ -7,8 +7,8 @@ from rest_framework.exceptions import AuthenticationFailed
 
 class RegisterView(APIView):
     def post(self, request):
-         serializer = UserSerializer(data=request.data)
-         serializer.is_valid(raise_exception=True)
+         serializer = UserSerializer(data=request.data) # данне по реквест запросу
+         serializer.is_valid(raise_exception=True) # проверка данных на валидность
          serializer.save()
          return Response(serializer.data)
 
