@@ -5,7 +5,7 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         field = ['id', 'username', 'email', 'password'] # здесь будем создавать поля для нового пользователя
-        extra_kwargs = {"password":{"write_only":True}}
+        extra_kwargs = {"password":{"write_only":True}} # только для записи
 
         def create(self, validated_data): # функция для хеширования пароля
             password = validated_data.pop("password", None)
