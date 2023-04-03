@@ -3,7 +3,7 @@ from rest_framework.views import APIView # с помощью него будем
 from .serializers import UserSerializer
 from rest_framework.response import Response
 from .models import User
-from rest_framework.exceptions import AuthenticationFailed
+from rest_framework.exceptions import AuthenticationFailed # исключение, если пользователь не тот
 
 class RegisterView(APIView):
     def post(self, request):
@@ -12,17 +12,17 @@ class RegisterView(APIView):
          serializer.save()
          return Response(serializer.data)
 
-class LoginView(APIView):
+class LoginView(APIView): # класс входа в систему
     def post(self, request):
         email = request.data['email']
-        pasword = request.data['password']
+        password = request.data['password']
 
         user = User.objects.filter(email=email).first()
 
-        if user is None:
+        if user is None: # если пользователь не тот
             raise AuthenticationFailed('Пользователь не найден')
 
-        if not user.check_password(password):
+        if not user.check_password(password): # если пароль не тот
             raise AuthenticationFailed('неверный пароль')
 
         return Response(user)
