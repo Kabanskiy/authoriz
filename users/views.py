@@ -31,6 +31,10 @@ class LoginView(APIView): # класс входа в систему
 
         token = jwt.encode(payload, 'secret', algorithm='HS256').decode('utf-8')
 
-        return Response({
-            'jwt': token
-        })
+        response = Response()
+        response.set_cookie(key='jwt', value=token, httponly=True)
+        response.data = {
+            'jwt':token
+            }
+
+        return response
